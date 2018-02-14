@@ -25,13 +25,13 @@ public final class Constants {
     public static final int    WIDTH               = 1200;
     public static final int    HEIGHT              = 800;
     public static final int    IFW                 = JComponent.WHEN_IN_FOCUSED_WINDOW;
-    public static final int    NUMBER_OF_LEVELS    = 2;
+    public static final int    NUMBER_OF_LEVELS    = 4;
     public static final int    TIMER_X             = 20;
     public static final int    TIMER_Y             = 50;
 
     // Physics
     public static final double GRAVITY             = -0.03;
-    public static final double FRIC                = 2;
+    public static final double FRIC                = 1.5;
 
     // Player
     public static final String MOVE_LEFT           = "move left";
@@ -39,9 +39,9 @@ public final class Constants {
     public static final String MOVE_LEFT_RELEASED  = "move left released";
     public static final String MOVE_RIGHT_RELEASED = "move right released";
     public static final String JUMP                = "jump";
-    public static final double PLAYER_MOVE_SPEED   = 0.3;
+    public static final double PLAYER_MOVE_SPEED   = 0.6;
     public static final double PLAYER_ACC          = 0.3;
-    public static final double PLAYER_JUMP_SPEED   = 1;
+    public static final double PLAYER_JUMP_SPEED   = 14;
     public static final double PLAYER_MASS         = 1;
 
     // Enemy 1

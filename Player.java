@@ -75,7 +75,8 @@ public class Player extends Element {
 		
         if (action.equals("jump") && (getY() == 0 || enableJump)) {
 			//if (yVel < 0) yVel = 0;
-			yVel += Constants.PLAYER_JUMP_SPEED * dt;
+         System.out.println("JUMP!");
+			yVel = Constants.PLAYER_JUMP_SPEED;
             setY(getY() + 1);
             enableJump = false;
 		}
@@ -109,7 +110,13 @@ public class Player extends Element {
 		onGround = false;
 		for (int i = 0; data[2][i] != null; i++) {
 			boolean[] hitFlags = BoundingBox.getCollisions(this, data[2][i]);
-			
+			if (hitFlags[0] && hitFlags[1] || 
+             hitFlags[1] && hitFlags[2] || 
+             hitFlags[2] && hitFlags[3] ||
+             hitFlags[3] && hitFlags[0]) {
+             break;   
+         }
+         
 			if (hitFlags[0]) {
 				yVel = 0;
 				setY(data[2][i].getY() + data[2][i].getHeight());
