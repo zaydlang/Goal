@@ -21,6 +21,8 @@ public class Enemy extends Element {
     private boolean enablePhysics = true;
     private boolean enableGravity = true;
 
+    private double dt = System.currentTimeMillis();
+    
     public Enemy(double x, double y, double width, double height) {
     	super(x, y, width, height, Color.RED);   	
     	setUpdate(true);
@@ -38,44 +40,57 @@ public class Enemy extends Element {
     }
 
     public Element[][] move(String action, Element[][] data) {
+        dt = System.currentTimeMillis() - dt;
+        
         double oldXVel = xVel;
         double oldYVel = yVel;
         double oldX = getX();
         double oldY = getY();
 
 		updatePos(xVel, yVel);
-          
-        int j = 0;
 		for (int i = 0; data[2][i] != null; i++) {
-			if (BoundingBox.intersects(this, data[2][i]) || BoundingBox.intersects(data[2][i], this)) {
-				if (BoundingBox.isAbove(this, data[2][i], Constants.BUFFER)) {
-					yVel = 0;
-					setY(data[2][i].getY() + data[2][i].getHeight());
-					//enablePhysics = true;
-				} 
-				
-				if (BoundingBox.hitRoof(this, data[2][i], Constants.BUFFER)) {
-					yVel = Constants.GRAVITY;
-					updatePos(0, yVel);
-				} 
-				
-				if (BoundingBox.hitLeft(this, data[2][i], Constants.BUFFER)) {
-					xVel = xVel > 0 ? -xVel : xVel;
-					setX(data[2][i].getX() - this.getWidth());
-					//yVel += Constants.GRAVITY;
-				}
-				
-				if (BoundingBox.hitRight(this, data[2][i], Constants.BUFFER)) {
-					xVel = xVel < 0 ? -xVel : xVel;
-					setX(data[2][i].getX() + data[2][i].getWidth());
-					//yVel += Constants.GRAVITY;
-				}
-
-				//enablePhysics = false;
-				i = 0;
+			boolean[] hitFlags = BoundingBox.getCollisions(this, data[2][i]);
+			if (hitFlags[0] && hitFlags[1] || 
+             hitFlags[1] && hitFlags[2] || 
+             hitFlags[2] && hitFlags[3] ||
+             hitFlags[3] && hitFlags[0]) {
+             break;   
+         }
+         
+			if (hitFlags[0]) {
+				yVel = 0;
+				setY(data[2][i].getY() + data[2][i].getHeight());
 			}
-		}
-		return data;
+			
+			if (hitFlags[1]) {
+				setX(data[2][i].getX() - this.getWidth());
+				xVel = -Constants.ENEMY_MOVE_SPEED;
+				yVel += Constants.GRAVITY;
+			}
+			
+			if (hitFlags[2]) {
+				setX(data[2][i].getX() + data[2][i].getWidth());
+				xVel = Constants.ENEMY_MOVE_SPEED;
+				yVel += Constants.GRAVITY;
+			}
+			
+			if (hitFlags[3]) {
+				yVel = Constants.GRAVITY * dt; 
+				updatePos(0, yVel);
+			}
+			
+			if (hitFlags[0] || hitFlags[1] || hitFlags[2] || hitFlags[3]) i = -1;
+	    }		
+       
+       boolean[] resetFlags = BoundingBox.getCollisions(this, data[0][0]);
+       System.out.println(resetFlags);
+       if (resetFlags[0] || resetFlags[1] || resetFlags[2] || resetFlags[3]) {
+           System.out.println("NU");
+           return null;
+       }
+       
+       dt = System.currentTimeMillis();
+       return data;
 	}
 	
     public void updatePos(double xVel, double yVel) {

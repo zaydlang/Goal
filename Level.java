@@ -18,11 +18,14 @@ public class Level {
     private int width;
     private int height;
     private Element[][] data;
-
+    private Element[][] originalData = new Element[200][200];
+    
     public Level(int width, int height, Element[][] data) {
     	this.width  = width;
     	this.height = height;
     	this.data   = data;
+      
+      originalData = data;
     }
 
     public boolean buildLevel(ArrayList<String> actionQueue) {
@@ -60,6 +63,21 @@ public class Level {
         }
         
         data = data[0][0].move("", data);
-        //data = data[3][0].move("", data);
+        for (int i = 0; data[3][i] != null && i < data[3].length; i++) {
+            data = data[3][i].move("", data);
+            if (data == null) {
+                resetLevel();
+                return;
+            }
+        }
+    }
+    
+    public void resetLevel() {
+        System.out.println(originalData == null);
+        data = originalData;
+    }
+    
+    public Element[][] getData() {
+        return data;
     }
 }

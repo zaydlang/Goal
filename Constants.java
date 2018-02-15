@@ -25,7 +25,7 @@ public final class Constants {
     public static final int    WIDTH               = 1200;
     public static final int    HEIGHT              = 800;
     public static final int    IFW                 = JComponent.WHEN_IN_FOCUSED_WINDOW;
-    public static final int    NUMBER_OF_LEVELS    = 4;
+    public static final int    NUMBER_OF_LEVELS    = 5;
     public static final int    TIMER_X             = 20;
     public static final int    TIMER_Y             = 50;
 
@@ -45,7 +45,7 @@ public final class Constants {
     public static final double PLAYER_MASS         = 1;
 
     // Enemy 1
-    public static final double ENEMY_MOVE_SPEED    = 0.2;
+    public static final double ENEMY_MOVE_SPEED    = 2;
     public static final double ENEMY_ACC           = 0.1;
     public static final double ENEMY_JUMP_SPEED    = 0.8;
     public static final double ENEMY_MASS          = 1;
