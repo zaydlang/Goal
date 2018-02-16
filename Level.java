@@ -28,7 +28,7 @@ public class Level {
       originalData = data;
     }
 
-    public boolean buildLevel(ArrayList<String> actionQueue) {
+    public boolean buildLevel(ArrayList<String> actionQueue) throws Exception {
         updateLevel(actionQueue);
         
         for (int i = 0; i < data.length; i++) {
@@ -54,7 +54,7 @@ public class Level {
 		((Goal)(data[5][0])).draw(g, width, height);
     }
 
-    public void updateLevel(ArrayList<String> actionQueue) {
+    public void updateLevel(ArrayList<String> actionQueue) throws Exception {
         for (int i = 0; actionQueue.size() != 0; actionQueue.remove(0)) {
             String action = actionQueue.get(0);
             

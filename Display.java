@@ -28,8 +28,9 @@ public class Display extends JComponent implements ActionListener {
    private long startTime;
    private int i = 0;
    private int time = 0;
-   private int currentLevel = 0;
+   private int currentLevelID = 0;
    private Player temp;
+   private Level currentLevel;
    private class ActionQueuer extends AbstractAction {
       String action;
       
@@ -51,47 +52,7 @@ public class Display extends JComponent implements ActionListener {
    }
 
    public void init() {
-      Player p1 = new Player(0, 1200, 50, 50);
-      Player p2 = new Player(0, 1200, 50, 50);
-      Player p3 = new Player(0, 1200, 50, 50);
-      Player p4 = new Player(0, 1200, 50, 50);
-      Player p5 = new Player(0, 1200, 50, 50);
-      Goal goal = new Goal(1100, 50, 50, 50);
-      
-      Element[][] level1Data = new Element[200][200];
-      Element[][] level2Data = new Element[200][200];
-      Element[][] level3Data = new Element[200][200];
-      Element[][] level4Data = new Element[200][200];
-      Element[][] level5Data = new Element[200][200];
-      
-      level1Data[0][0] = p1;
-      level2Data[0][0] = p2;
-      level3Data[0][0] = p3;
-      level4Data[0][0] = p4;
-      level5Data[0][0] = p5;
-      
-      level1Data[5][0] = goal;
-      level2Data[5][0] = goal;
-      level3Data[5][0] = new Goal(1125, 550, 50, 50);
-      level4Data[5][0] = new Goal(1125, 550, 50, 50);
-      level5Data[5][0] = new Goal(1125, 550, 50, 50);
-      
-      level2Data[2][0] = new Solid(600, 0, 100, 500);
-      level3Data[2][1] = new Solid(1100, 400, 100, 100);
-      level3Data[2][0] = new Solid(600, 0, 100, 500);
-      level4Data[2][0] = new Solid(750, 400, 575, 100);
-      level4Data[2][1] = new Solid(500, 100, 100, 1000);
-      level4Data[2][2] = new Solid(750, 0, 100, 400);
-      level5Data[2][0] = new Solid(0, 0, 100, 500);
-      level5Data[2][1] = new Solid(1100, 0, 100, 500);
-      
-      level5Data[3][0] = new Enemy(500, 0, 50, 50);
-      
-      levels[0] = new Level(Constants.WIDTH, Constants.HEIGHT, level1Data);
-      levels[1] = new Level(Constants.WIDTH, Constants.HEIGHT, level2Data);
-      levels[2] = new Level(Constants.WIDTH, Constants.HEIGHT, level3Data);
-      levels[3] = new Level(Constants.WIDTH, Constants.HEIGHT, level4Data);
-      levels[4] = new Level(Constants.WIDTH, Constants.HEIGHT, level5Data);
+      currentLevel = LevelFactory.getLevel(currentLevelID);
       //data[2][1] = new Solid(800, 0, 100, 500);
       //data[2][2] = new Solid(0, 200, 400, 100);
       //data[2][2] = new Solid(700, 100, 100, 100);
@@ -128,7 +89,7 @@ public class Display extends JComponent implements ActionListener {
       i++;
       g.setColor(Color.WHITE);
       g.fillRect(0, 0, Constants.WIDTH, Constants.HEIGHT);
-      levels[currentLevel].drawLevel(g);
+      currentLevel.drawLevel(g);
       
       g.setFont(font);
       g.setColor(Color.BLACK);
@@ -150,12 +111,18 @@ public class Display extends JComponent implements ActionListener {
 
       if (e.getSource() == updateTimer) {
 //System.out.println("BUILDING");
-      	 if (levels[currentLevel].buildLevel(actionQueue)) {
-      	    if (++currentLevel == Constants.NUMBER_OF_LEVELS) {
-      	        temp = new Player(0, 1200, 50, 50);
-      	        System.exit(1); // this is a really bad way to say "you won", but whatever.
-      	    } 
-      	 }
+         try {
+          	 if (currentLevel.buildLevel(actionQueue)) {
+          	    if (++currentLevelID == Constants.NUMBER_OF_LEVELS) {
+          	        temp = new Player(0, 1200, 50, 50);
+          	        System.exit(1); // this is a really bad way to say "you won", but whatever.
+          	    } else {
+          	        currentLevel = LevelFactory.getLevel(currentLevelID);
+          	    }
+          	 }
+         } catch (Exception ex) {
+            currentLevel = LevelFactory.getLevel(currentLevelID);
+         }
       }
 
 	  if (e.getSource() == countTimer) {

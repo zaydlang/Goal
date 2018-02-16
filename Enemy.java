@@ -39,7 +39,7 @@ public class Enemy extends Element {
     	updatePos(xVel, yVel);
     }
 
-    public Element[][] move(String action, Element[][] data) {
+    public Element[][] move(String action, Element[][] data) throws Exception {
         dt = System.currentTimeMillis() - dt;
         
         double oldXVel = xVel;
@@ -83,10 +83,8 @@ public class Enemy extends Element {
 	    }		
        
        boolean[] resetFlags = BoundingBox.getCollisions(this, data[0][0]);
-       System.out.println(resetFlags);
        if (resetFlags[0] || resetFlags[1] || resetFlags[2] || resetFlags[3]) {
-           System.out.println("NU");
-           return null;
+		   throw new Exception();
        }
        
        dt = System.currentTimeMillis();

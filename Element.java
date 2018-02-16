@@ -18,8 +18,8 @@ public class Element {
       this.c      = c;
    }
    
-   public void update() {};
-   public Element[][] move(String action, Element[][] data) { return null; };
+   public void update() throws Exception {};
+   public Element[][] move(String action, Element[][] data) throws Exception { return null; };
 
    public double getX()          { return x; }
    public double getY()          { return y; }
