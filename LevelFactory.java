@@ -13,6 +13,8 @@ public class LevelFactory {
 				return createLevelFive();
 		    case 5:
 		        return createLevelSix();
+		    case 6:
+		        return createLevelSeven();
 		}
 		
 		return null;
@@ -113,6 +115,24 @@ public class LevelFactory {
         levelData[2][4] = new Solid(0, 0, 100, 800);
       
 	    levelData[3][0] = new Enemy(100, 801, 50, 50);
+        
+        levelData[5][0] = goal;
+        
+        return new Level(Constants.WIDTH, Constants.HEIGHT, levelData);
+	}
+	
+	public static Level createLevelSeven() {
+	    Player p = new Player(0, 1200, 50, 50);
+        Goal goal = new Goal(1125, 550, 50, 50);
+      
+        Element[][] levelData = new Element[200][200];
+      
+        levelData[0][0] = p;
+        
+        levelData[2][0] = new Solid(0, 0, 100, 500);
+        levelData[2][1] = new Solid(1100, 0, 100, 500);
+      
+        levelData[3][0] = new RandomEnemy(500, 0, 50, 50);
         
         levelData[5][0] = goal;
         

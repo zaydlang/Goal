@@ -25,7 +25,7 @@ public final class Constants {
     public static final int    WIDTH               = 1200;
     public static final int    HEIGHT              = 800;
     public static final int    IFW                 = JComponent.WHEN_IN_FOCUSED_WINDOW;
-    public static final int    NUMBER_OF_LEVELS    = 6;
+    public static final int    NUMBER_OF_LEVELS    = 7;
     public static final int    TIMER_X             = 20;
     public static final int    TIMER_Y             = 50;
 
@@ -44,11 +44,14 @@ public final class Constants {
     public static final double PLAYER_JUMP_SPEED   = 14;
     public static final double PLAYER_MASS         = 1;
 
-    // Enemy 1
+    // Enemy
     public static final double ENEMY_MOVE_SPEED    = 2;
     public static final double ENEMY_ACC           = 0.1;
     public static final double ENEMY_JUMP_SPEED    = 0.8;
     public static final double ENEMY_MASS          = 1;
+
+	// Random Enemy
+	public static final double RANDOM_ENEMY_CHANCE = 0.96;
 
     // Grapple - deprecated
     public static final String GRAPPLE             = "grapple";
