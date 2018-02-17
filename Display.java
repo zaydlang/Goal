@@ -31,6 +31,7 @@ public class Display extends JComponent implements ActionListener {
    private int currentLevelID = 0;
    private Player temp;
    private Level currentLevel;
+   private int fps = 0;
    private class ActionQueuer extends AbstractAction {
       String action;
       
@@ -94,10 +95,11 @@ public class Display extends JComponent implements ActionListener {
       g.setFont(font);
       g.setColor(Color.BLACK);
       g.drawString("Time: " + time, Constants.TIMER_X, Constants.TIMER_Y);
-
+      g.drawString("FPS: " + fps, Constants.TIMER_X, Constants.TIMER_Y + 50);
       if (System.currentTimeMillis() - startTime >= 1000) {
          System.out.println("FPS: " + i);
          startTime = System.currentTimeMillis();
+         fps = i;
          i = 0;
       }
    }
