@@ -104,32 +104,35 @@ public class Display extends JComponent implements ActionListener {
       }
    }
 
-   @Override
-   public synchronized void actionPerformed(ActionEvent e) {
-      if (e.getSource() == refreshTimer) {
+    @Override
+    public synchronized void actionPerformed(ActionEvent e) {
+		if (e.getSource() == refreshTimer) {
 //System.out.println("REPAINT");
-         repaint();
-      }
+        	repaint();
+      	}
 
-      if (e.getSource() == updateTimer) {
+      	if (e.getSource() == updateTimer) {
 //System.out.println("BUILDING");
-         try {
-          	 if (currentLevel.buildLevel(actionQueue)) {
-          	    if (++currentLevelID == Constants.NUMBER_OF_LEVELS) {
-          	        temp = new Player(0, 1200, 50, 50);
-          	        System.exit(1); // this is a really bad way to say "you won", but whatever.
-          	    } else {
-          	        currentLevel = LevelFactory.getLevel(currentLevelID);
-          	    }
-          	 }
-         } catch (Exception ex) {
-            currentLevel = LevelFactory.getLevel(currentLevelID);
-         }
-      }
+	      	Flags flags = currentLevel.buildLevel(actionQueue);
 
-	  if (e.getSource() == countTimer) {
-	     time++;
-	  }
+          	if (flags.getNextLevelFlag()) {
+		      	if (++currentLevelID == Constants.NUMBER_OF_LEVELS) {
+		      		temp = new Player(0, 1200, 50, 50);
+		      	    System.exit(1); // this is a really bad way to say "you won", but whatever.
+		      	} else {
+		      	    currentLevel = LevelFactory.getLevel(currentLevelID);
+		      	}
+          	}
+
+		    if (flags.getHitEnemyFlag()) {
+			 	currentLevel = LevelFactory.getLevel(currentLevelID);
+			}
+      
+       }
+
+	   if (e.getSource() == countTimer) {
+	        time++;
+	   }
    }
 
    public static void main(String[] args) {

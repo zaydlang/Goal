@@ -17,44 +17,34 @@ import java.util.ArrayList;
 public class Level {
     private int width;
     private int height;
-    private Element[][] data;
-    private Element[][] originalData = new Element[200][200];
+    private Data data;
     
-    public Level(int width, int height, Element[][] data) {
+    public Level(int width, int height) {
     	this.width  = width;
     	this.height = height;
-    	this.data   = data;
-      
-      originalData = data;
+    	data = new Data(width, height);
     }
 
-    public boolean buildLevel(ArrayList<String> actionQueue) throws Exception {
-        updateLevel(actionQueue);
-        
-        for (int i = 0; i < data.length; i++) {
-			for (int j = 0; data[i][j] != null; j++) {
-                Element temp = data[i][j];
-                temp.update();
+    public Flags buildLevel(ArrayList<String> actionQueue) {
+        // updateLevel(actionQueue);
+        data.update(actionQueue);
+        return data.build();
+        /*
+        for (int i = 0; i < players.size(); i++) {
+			for (int j = 0; data.get(i).get(j) != null; j++) {
+                data.get(i).get(j).update();
 			}
 		}
 
-		return ((Player)(data[0][0])).getNextLevelFlag();
+		return ((Player)(data.get(0).get(0))).getNextLevelFlag();*/
     }
     
     public void drawLevel(Graphics g) {
-		for (int i = 0; i < data.length; i++) {
-			for (int j = 0; data[i][j] != null; j++) {
-				if (i == 5) continue;
-                Element temp = data[i][j];
-                g.setColor(temp.getColor());
-				g.fillRect((int)(temp.getX()), (int)(height - temp.getY() - temp.getHeight()), (int)(temp.getWidth()), (int)(temp.getHeight()));
-			}
-		}
-
-		((Goal)(data[5][0])).draw(g, width, height);
+    	data.draw(g);
     }
 
-    public void updateLevel(ArrayList<String> actionQueue) throws Exception {
+    public void updateLevel(ArrayList<String> actionQueue) {
+    /*
         for (int i = 0; actionQueue.size() != 0; actionQueue.remove(0)) {
             String action = actionQueue.get(0);
             
@@ -69,15 +59,33 @@ public class Level {
                 resetLevel();
                 return;
             }
-        }
+        }*/
     }
     
     public void resetLevel() {
-        System.out.println(originalData == null);
-        data = originalData;
     }
     
-    public Element[][] getData() {
+    public Data getData() {
         return data;
     }
+
+	public void addPlayer(Player p) {
+		data.addPlayer(p);
+	}
+
+	public void addGoal(Goal g) {
+		data.addGoal(g);
+	}
+
+	public void addSolid(Solid s) {
+		data.addSolid(s);
+	}
+	
+	public void addEnemy(Enemy e) {
+		data.addEnemy(e);
+	}
+
+	public void addMovingSolid(MovingSolid ms) {
+		data.addMovingSolid(ms);
+	}
 }

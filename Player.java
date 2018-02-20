@@ -42,20 +42,20 @@ public class Player extends Element {
     	updatePos(xVel, yVel);
     }
     
-    public Element[][] move(String action, Element[][] data) {
+    public Flags move(String action, Data data, Flags flags) {
         dt = System.currentTimeMillis() - dt;
         oldXVel = xVel;
         oldYVel = yVel;
         oldX = getX();
         oldY = getY();
-
 		if (action.equals("move left") || movingLeft) {
 		    movingLeft = true;	
 		    
             // Smooth Turning in mid-air
+            /*
             if ((getY() != 0 && !enablePhysics) && xVel > 0) {
 			    xVel -= Constants.PLAYER_ACC * dt;
-		    }
+		    }*/
 		    
 			xVel -= Constants.PLAYER_ACC * dt;
             if (-xVel > Constants.PLAYER_MOVE_SPEED) xVel = -Constants.PLAYER_MOVE_SPEED * dt; 
@@ -65,9 +65,10 @@ public class Player extends Element {
             movingRight = true;
             
             // Smooth Turning in mid-air
+            /*
             if (getY() != 0 && xVel < 0) {
 			    xVel += Constants.PLAYER_ACC * dt;
-		    }
+		    }*/
 		    
 			xVel += Constants.PLAYER_ACC * dt;
             if (xVel > Constants.PLAYER_MOVE_SPEED) xVel = Constants.PLAYER_MOVE_SPEED * dt;
@@ -83,10 +84,10 @@ public class Player extends Element {
 		
 		if (action.equals("move left released")) movingLeft = false;
 		if (action.equals("move right released")) movingRight = false;
-		
+		/*
 		if (action.equals("grapple")) {
 		   data[1][0] = new Grapple(getX(), getY(), Constants.GRAPPLE_SIZE, Constants.GRAPPLE_SIZE, Constants.GRAPPLE_SPEED);
-		}
+		}*/
 
 		if (enablePhysics) {
 	    	if (xVel > 0) {
@@ -108,8 +109,9 @@ public class Player extends Element {
     	}
 
 		onGround = false;
-		for (int i = 0; data[2][i] != null; i++) {
-			boolean[] hitFlags = BoundingBox.getCollisions(this, data[2][i]);
+		ArrayList<Solid> solids = data.getSolids();
+		for (int i = 0; i < solids.size(); i++) {
+			boolean[] hitFlags = BoundingBox.getCollisions(this, solids.get(i));
 			if (hitFlags[0] && hitFlags[1] || 
              hitFlags[1] && hitFlags[2] || 
              hitFlags[2] && hitFlags[3] ||
@@ -119,20 +121,20 @@ public class Player extends Element {
          
 			if (hitFlags[0]) {
 				yVel = 0;
-				setY(data[2][i].getY() + data[2][i].getHeight());
+				setY(solids.get(i).getY() + solids.get(i).getHeight());
 				enableJump = true;
 				onGround = true;
 			}
 			
 			if (hitFlags[1]) {
-				setX(data[2][i].getX() - this.getWidth());
+				setX(solids.get(i).getX() - this.getWidth());
 				xVel = 0;
 				yVel += Constants.GRAVITY;
 				enableJump = true;
 			}
 			
 			if (hitFlags[2]) {
-				setX(data[2][i].getX() + data[2][i].getWidth());
+				setX(solids.get(i).getX() + solids.get(i).getWidth());
 				xVel = 0;
 				yVel += Constants.GRAVITY;
 				enableJump = true;
@@ -146,9 +148,16 @@ public class Player extends Element {
 			
 			if (hitFlags[0] || hitFlags[1] || hitFlags[2] || hitFlags[3]) i = -1;
 	    }
-
-	    boolean[] finishedLevel = BoundingBox.getCollisions(this, data[5][0]);
-		nextLevelFlag = (finishedLevel[0] || finishedLevel[1] || finishedLevel[2] || finishedLevel[3]);
+		
+		ArrayList<Goal> goals = data.getGoals();
+		for (int i = 0; i < goals.size(); i++) {
+			boolean[] finishedLevel = BoundingBox.getCollisions(this, data.getGoals().get(i));
+			if (finishedLevel[0] || finishedLevel[1] || finishedLevel[2] || finishedLevel[3]) {
+				flags.setNextLevelFlag(true);
+				break;
+			}
+		}
+		
 		/*
 			if (BoundingBox.intersects(this, data[2][i]) || BoundingBox.intersects(data[2][i], this)) {
 				if (BoundingBox.isAbove(this, data[2][i], Constants.BUFFER)) {
@@ -193,17 +202,13 @@ public class Player extends Element {
 
 		dt = System.currentTimeMillis();
     	
-		return data;
+		return flags;
 	}
 	
     public void updatePos(double xVel, double yVel) {
         //System.out.println(getX() + " " + getY() + " " + xVel + " " + yVel);
         setX(getX() + xVel);
         setY(getY() + yVel);
-    }
-
-    public void getHurt() {
-	    System.out.println("YEEEEOWCH!!!!");
     }
 
 	public void setNextLevelFlag(boolean newFlag) { nextLevelFlag = newFlag; }

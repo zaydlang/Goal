@@ -22,106 +22,90 @@ public class LevelFactory {
       
 	
 	public static Level createLevelOne() {
-	    Player p = new Player(0, 1200, 50, 50);
-        Goal goal = new Goal(1100, 50, 50, 50);
+		Level level = new Level(Constants.WIDTH, Constants.HEIGHT);
+	    
+	    level.addPlayer(new Player(0, 1200, 50, 50));
+	    
+        level.addGoal(new Goal(1100, 50, 50, 50));
       
-        Element[][] levelData = new Element[200][200];
-      
-        levelData[0][0] = p;
-      
-        levelData[5][0] = goal;
-      
-        return new Level(Constants.WIDTH, Constants.HEIGHT, levelData);
+        return level;
 	}
 	
 	public static Level createLevelTwo() {
-	    Player p = new Player(0, 1200, 50, 50);
-        Goal goal = new Goal(1100, 50, 50, 50);
+		Level level = new Level(Constants.WIDTH, Constants.HEIGHT);
+	    
+	    level.addPlayer(new Player(0, 1200, 50, 50));
+	    
+	    level.addSolid(new Solid(600, 0, 100, 500));
+	    
+        level.addGoal(new Goal(1100, 50, 50, 50));
       
-        Element[][] levelData = new Element[200][200];
-      
-        levelData[0][0] = p;
-      
-        levelData[2][0] = new Solid(600, 0, 100, 500);
-        
-        levelData[5][0] = goal;
-      
-        return new Level(Constants.WIDTH, Constants.HEIGHT, levelData);
+        return level;
 	}
 	
 	public static Level createLevelThree() {
-	    Player p = new Player(0, 1200, 50, 50);
-        Goal goal = new Goal(1125, 550, 50, 50);
+        Level level = new Level(Constants.WIDTH, Constants.HEIGHT);
+	    
+	    level.addPlayer(new Player(0, 1200, 50, 50));
+	    
+	    level.addSolid(new Solid(1100, 400, 100, 100));
+	    level.addSolid(new Solid(600, 0, 100, 500));
+	    
+        level.addGoal(new Goal(1125, 550, 50, 50));
       
-        Element[][] levelData = new Element[200][200];
-      
-        levelData[0][0] = p;
-        
-        levelData[2][1] = new Solid(1100, 400, 100, 100);
-        levelData[2][0] = new Solid(600, 0, 100, 500);
-      
-        levelData[5][0] = goal;
-      
-        return new Level(Constants.WIDTH, Constants.HEIGHT, levelData);
+        return level;
 	}
 	
 	public static Level createLevelFour() {
-	    Player p = new Player(0, 1200, 50, 50);
-        Goal goal = new Goal(1125, 550, 50, 50);
+        Level level = new Level(Constants.WIDTH, Constants.HEIGHT);
+	    
+	    level.addPlayer(new Player(0, 1200, 50, 50));
+	    
+	    level.addSolid(new Solid(750, 400, 575, 100));
+	    level.addSolid(new Solid(500, 100, 100, 1000));
+	    level.addSolid(new Solid(750, 0, 100, 400));
+	    
+        level.addGoal(new Goal(1125, 550, 50, 50));
       
-        Element[][] levelData = new Element[200][200];
-      
-        levelData[0][0] = p;
-        
-        levelData[2][0] = new Solid(750, 400, 575, 100);
-        levelData[2][1] = new Solid(500, 100, 100, 1000);
-        levelData[2][2] = new Solid(750, 0, 100, 400);
-      
-        levelData[5][0] = goal;
-      
-        return new Level(Constants.WIDTH, Constants.HEIGHT, levelData);
+        return level;
 	}
 	
 	public static Level createLevelFive() {
-	    Player p = new Player(0, 1200, 50, 50);
-        Goal goal = new Goal(1125, 550, 50, 50);
+        Level level = new Level(Constants.WIDTH, Constants.HEIGHT);
+	    
+	    level.addPlayer(new Player(0, 1200, 50, 50));
+	    
+	    level.addSolid(new Solid(0, 0, 100, 500));
+	    level.addSolid(new Solid(1100, 0, 100, 500));
+	    
+	    level.addEnemy(new Enemy(500, 0, 50, 50));
+        level.addGoal(new Goal(1125, 550, 50, 50));
       
-        Element[][] levelData = new Element[200][200];
-      
-        levelData[0][0] = p;
-        
-        levelData[2][0] = new Solid(0, 0, 100, 500);
-        levelData[2][1] = new Solid(1100, 0, 100, 500);
-      
-        levelData[3][0] = new Enemy(500, 0, 50, 50);
-        
-        levelData[5][0] = goal;
-        
-        return new Level(Constants.WIDTH, Constants.HEIGHT, levelData);
+        return level;
 	}
 	
 	public static Level createLevelSix() {
-	    Player p = new Player(800, 801, 50, 50);
-        Goal goal = new Goal(125, 25, 50, 50);
+        Level level = new Level(Constants.WIDTH, Constants.HEIGHT);
+	    
+	    level.addPlayer(new Player(800, 800, 50, 50));
+	    
+	    level.addSolid(new Solid(0, 600, 950, 100));
+	    level.addSolid(new Solid(250, 400, 950, 100));
+	    level.addSolid(new Solid(0, 200, 950, 100));
+	    level.addSolid(new Solid(1100, 0, 100, 800));
+	    level.addSolid(new Solid(0, 0, 100, 800));
+	    
+	    level.addEnemy(new Enemy(100, 701, 50, 50));
+        level.addGoal(new Goal(125, 25, 50, 50));
       
-        Element[][] levelData = new Element[200][200];
-      
-        levelData[0][0] = p;
-        
-        levelData[2][0] = new Solid(0, 600, 950, 100);
-        levelData[2][1] = new Solid(250, 400, 950, 100); 
-        levelData[2][2] = new Solid(0, 200, 950, 100); 
-        levelData[2][3] = new Solid(1100, 0, 100, 800);
-        levelData[2][4] = new Solid(0, 0, 100, 800);
-      
-	    levelData[3][0] = new Enemy(100, 801, 50, 50);
-        
-        levelData[5][0] = goal;
-        
-        return new Level(Constants.WIDTH, Constants.HEIGHT, levelData);
+        return level;
 	}
 	
 	public static Level createLevelSeven() {
+        return null;
+	}
+
+	public static Level createLevelEight() {/*
 	    Player p = new Player(0, 1200, 50, 50);
         Goal goal = new Goal(1125, 550, 50, 50);
       
@@ -129,13 +113,13 @@ public class LevelFactory {
       
         levelData[0][0] = p;
         
-        levelData[2][0] = new Solid(0, 0, 100, 500);
-        levelData[2][1] = new Solid(1100, 0, 100, 500);
-      
-        levelData[3][0] = new RandomEnemy(500, 0, 50, 50);
+        levelData[2][0] = new Solid(0, 600, 350, 100);
+        levelData[2][1] = new Solid(550, 600, 350, 100);
+      	levelData[4][2] = new MovingSolid(450, 600
         
         levelData[5][0] = goal;
         
-        return new Level(Constants.WIDTH, Constants.HEIGHT, levelData);
+        return new Level(Constants.WIDTH, Constants.HEIGHT, levelData);*/
+        return null;
 	}
 }

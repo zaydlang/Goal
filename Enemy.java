@@ -11,6 +11,8 @@ import java.awt.geom.*;
 
 import java.lang.Math.*;
 
+import java.util.ArrayList;
+
 public class Enemy extends Element {
     private double xVel = Constants.ENEMY_MOVE_SPEED;
     private double yVel = 0;
@@ -39,7 +41,7 @@ public class Enemy extends Element {
     	updatePos(xVel, yVel);
     }
 
-    public Element[][] move(String action, Element[][] data) throws Exception {
+    public Flags move(String action, Data data, Flags flags) {
         dt = System.currentTimeMillis() - dt;
         
         double oldXVel = xVel;
@@ -48,8 +50,9 @@ public class Enemy extends Element {
         double oldY = getY();
 
 		updatePos(xVel, yVel);
-		for (int i = 0; data[2][i] != null; i++) {
-			boolean[] hitFlags = BoundingBox.getCollisions(this, data[2][i]);
+		ArrayList<Solid> solids = data.getSolids();
+		for (int i = 0; i < solids.size(); i++) {
+			boolean[] hitFlags = BoundingBox.getCollisions(this, solids.get(i));
 			if (hitFlags[0] && hitFlags[1] || 
              hitFlags[1] && hitFlags[2] || 
              hitFlags[2] && hitFlags[3] ||
@@ -59,17 +62,17 @@ public class Enemy extends Element {
          
 			if (hitFlags[0]) {
 				yVel = 0;
-				setY(data[2][i].getY() + data[2][i].getHeight());
+				setY(solids.get(i).getY() + solids.get(i).getHeight());
 			}
 			
 			if (hitFlags[1]) {
-				setX(data[2][i].getX() - this.getWidth());
+				setX(solids.get(i).getX() - this.getWidth());
 				xVel = -Constants.ENEMY_MOVE_SPEED;
 				yVel += Constants.GRAVITY;
 			}
 			
 			if (hitFlags[2]) {
-				setX(data[2][i].getX() + data[2][i].getWidth());
+				setX(solids.get(i).getX() + solids.get(i).getWidth());
 				xVel = Constants.ENEMY_MOVE_SPEED;
 				yVel += Constants.GRAVITY;
 			}
@@ -82,13 +85,17 @@ public class Enemy extends Element {
 			if (hitFlags[0] || hitFlags[1] || hitFlags[2] || hitFlags[3]) i = -1;
 	    }		
        
-       boolean[] resetFlags = BoundingBox.getCollisions(this, data[0][0]);
-       if (resetFlags[0] || resetFlags[1] || resetFlags[2] || resetFlags[3]) {
-		   throw new Exception();
-       }
+       ArrayList<Player> players = data.getPlayers();
+	   for (int i = 0; i < players.size(); i++) {
+		   boolean[] resetFlags = BoundingBox.getCollisions(this, players.get(i));
+		   if (resetFlags[0] || resetFlags[1] || resetFlags[2] || resetFlags[3]) {
+			   flags.setHitEnemyFlag(true);
+			   break;
+		   }
+	   }
        
        dt = System.currentTimeMillis();
-       return data;
+       return flags;
 	}
 	
     public void updatePos(double xVel, double yVel) {
