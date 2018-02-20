@@ -15,6 +15,8 @@ public class LevelFactory {
 		        return createLevelSix();
 		    case 6:
 		        return createLevelSeven();
+		    case 7:
+		    	return createLevelEight();
 		}
 		
 		return null;
@@ -36,7 +38,7 @@ public class LevelFactory {
 	    
 	    level.addPlayer(new Player(0, 1200, 50, 50));
 	    
-	    level.addSolid(new Solid(600, 0, 100, 500));
+	    level.addSolid(new Solid(550, 0, 100, 200));
 	    
         level.addGoal(new Goal(1100, 50, 50, 50));
       
@@ -44,6 +46,34 @@ public class LevelFactory {
 	}
 	
 	public static Level createLevelThree() {
+		Level level = new Level(Constants.WIDTH, Constants.HEIGHT);
+	    
+	    level.addPlayer(new Player(0, 1200, 50, 50));
+	    
+	    level.addSolid(new Solid(800, 0, 150, 100));
+	    level.addSolid(new Solid(950, 0, 150, 250));
+	    level.addSolid(new Solid(1100, 0, 100, 400));
+	    
+        level.addGoal(new Goal(1125, 425, 50, 50));
+      
+        return level;
+	}
+	
+	public static Level createLevelFour() {
+		Level level = new Level(Constants.WIDTH, Constants.HEIGHT);
+	    
+	    level.addPlayer(new Player(0, 1200, 50, 50));
+	    
+	    level.addSolid(new Solid(700, 0, 100, 100));
+	    level.addSolid(new Solid(900, 0, 100, 250));
+	    level.addSolid(new Solid(1100, 0, 100, 400));
+	    
+        level.addGoal(new Goal(1125, 425, 50, 50));
+      
+        return level;
+	}
+	
+	public static Level createLevelFive() {
         Level level = new Level(Constants.WIDTH, Constants.HEIGHT);
 	    
 	    level.addPlayer(new Player(0, 1200, 50, 50));
@@ -56,7 +86,7 @@ public class LevelFactory {
         return level;
 	}
 	
-	public static Level createLevelFour() {
+	public static Level createLevelSix() {
         Level level = new Level(Constants.WIDTH, Constants.HEIGHT);
 	    
 	    level.addPlayer(new Player(0, 1200, 50, 50));
@@ -70,7 +100,7 @@ public class LevelFactory {
         return level;
 	}
 	
-	public static Level createLevelFive() {
+	public static Level createLevelSeven() {
         Level level = new Level(Constants.WIDTH, Constants.HEIGHT);
 	    
 	    level.addPlayer(new Player(0, 1200, 50, 50));
@@ -84,7 +114,7 @@ public class LevelFactory {
         return level;
 	}
 	
-	public static Level createLevelSix() {
+	public static Level createLevelEight() {
         Level level = new Level(Constants.WIDTH, Constants.HEIGHT);
 	    
 	    level.addPlayer(new Player(800, 800, 50, 50));
@@ -101,11 +131,11 @@ public class LevelFactory {
         return level;
 	}
 	
-	public static Level createLevelSeven() {
+	public static Level createLevelNine() {
         return null;
 	}
 
-	public static Level createLevelEight() {/*
+	public static Level createLevelTen() {/*
 	    Player p = new Player(0, 1200, 50, 50);
         Goal goal = new Goal(1125, 550, 50, 50);
       
