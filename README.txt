@@ -24,34 +24,24 @@ There are 7 levels. Good luck!
 ===== LEVEL CREATION =====
 Here's an example level, level 5.
 
-	Player p = new Player(0, 1200, 50, 50);
-    Goal goal = new Goal(1125, 550, 50, 50);
+    Level level = new Level(Constants.WIDTH, Constants.HEIGHT);
+	    
+	level.addPlayer(new Player(0, 1200, 50, 50));
+	    
+	level.addSolid(new Solid(0, 0, 100, 500));
+	level.addSolid(new Solid(1100, 0, 100, 500));
+	    
+	level.addEnemy(new Enemy(500, 0, 50, 50));
+    
+	level.addGoal(new Goal(1125, 550, 50, 50));
       
-    Element[][] levelData = new Element[200][200];
-      
-    levelData[0][0] = p;
-        
-    levelData[2][0] = new Solid(0, 0, 100, 500);
-    levelData[2][1] = new Solid(1100, 0, 100, 500);
-      
-    levelData[3][0] = new Enemy(500, 0, 50, 50);
-      
-    levelData[5][0] = goal;
-        
-    return new Level(Constants.WIDTH, Constants.HEIGHT, levelData);
+    return level;
 
-Each Element takes 4 arguments. The first two are the x and y coordinates,
-while the last two are the width and height, respectively. The elements
-must be stored in the correct spots in levelData for the level to work. Here's
-a key:
-
-	level[0] contains players
-	level[2] contains solids (walls / floor)
-	level[3] contains enemies
-	level[5] contains goals (note that only one goal must be collected in order to finish a level.
-
-Once you've made your own level, you'll have to edit the switch case earlier in the 
-LevelFactory.java file.
+Each Element (Player, Solid, Enemy, Goal, etc.) takes 4 arguments. The 
+first two are the x and y coordinates, and the last two are the width 
+and height, respectively. The elements can be added to the level as
+shown above. Once you've made your own level, you'll have to edit the 
+switch case earlier in the LevelFactory.java file.
 
 	switch (id) {
 		case 0: 
