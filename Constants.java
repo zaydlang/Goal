@@ -25,7 +25,7 @@ public final class Constants {
     public static final int    WIDTH               = 1200;
     public static final int    HEIGHT              = 800;
     public static final int    IFW                 = JComponent.WHEN_IN_FOCUSED_WINDOW;
-    public static final int    NUMBER_OF_LEVELS    = 7;
+    public static final int    NUMBER_OF_LEVELS    = 8;
     public static final int    TIMER_X             = 20;
     public static final int    TIMER_Y             = 50;
 
